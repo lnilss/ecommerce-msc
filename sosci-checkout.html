@@ -25,6 +25,12 @@
 		top: 0 !important;
 		z-index: 10 !important;
 	}
+	
+	.cart-label {
+	    font-size: 12px;
+	    font-weight: 200 !important;
+	    padding-right: 0.5em;
+	}
 
 	.cart-icon-btn {
 		background: none !important;
@@ -85,8 +91,9 @@
 	}
 
 	.page-main {
-		max-width: 1280px !important;
-		margin: 0 auto !important;
+		width: 100% !important;
+		max-width: none !important;
+		margin: 0 !important;
 		padding: 48px 83px !important;
 	}
 
@@ -94,6 +101,22 @@
 		.page-main {
 			padding: 48px 16px;
 		}
+	}
+
+	/* Make only the questionnaire content full-width, keep header/footer constrained */
+	div.s2t-questionary.s2t-inner {
+		width: 100% !important;
+		max-width: none !important;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		box-sizing: border-box !important;
+	}
+	/* Remove top spacer margin that SoSci injects before question content */
+	#s2t-content > div[style*="margin-top: 60px"] {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
 	}
 
 	h1 {
@@ -124,12 +147,12 @@
 		justify-content: center;
 		overflow: hidden;
 		position: relative;
+		box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
 	}
-
 	.product-image.zoomed {
-		cursor: zoom-in;
+	cursor: zoom-in;
+	touch-action: none;
 	}
-
 	.product-image img {
 		width: 100%;
 		height: 100%;
@@ -137,10 +160,6 @@
 		object-position: center;
 		max-width: none;
 		transition: transform 0.3s ease;
-	}
-
-	.product-image img.zoomed-in {
-		transform: scale(4) translateZ(0);
 	}
 
 	.zoom-indicator {
@@ -158,7 +177,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		z-index: 10;
+		z-index: 5;
 		transition: all 0.2s ease;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	}
@@ -166,6 +185,12 @@
 	.zoom-indicator:hover {
 		background: #333;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+	}
+
+	.product-info h2 {
+		font-size: 2.2rem;
+		font-weight: 700;
+		margin: 0;
 	}
 
 	.product-info {
@@ -178,7 +203,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
-		margin-bottom: 8px;
 	}
 
 	.brand-name {
@@ -186,7 +210,7 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: #666;
+		color: #4b5563;
 	}
 
 	.price {
@@ -197,7 +221,7 @@
 	.description {
 		font-size: 0.9375rem;
 		line-height: 1.6;
-		color: #364153;
+		color: #1f2933;
 		margin: 0;
 	}
 
@@ -272,14 +296,24 @@
 		gap: 8px !important;
 		transition: opacity 0.2s !important;
 	}
+	
 
 	.add-to-cart-btn:hover {
 		opacity: 0.9 !important;
 	}
 
 	.add-to-cart-btn:active {
-		animation: buttonPress 0.3s ease !important;
-	}
+	animation: buttonPress 0.3s ease !important;
+    }
+    
+    .add-to-cart-btn:disabled,
+    .add-to-cart-btn[disabled] {
+	background: #d1d5db !important;
+	color: #9ca3af !important;
+	cursor: not-allowed !important;
+	opacity: 1 !important;
+	box-shadow: none !important;
+    }
 
 	@keyframes buttonPress {
 		0% {
@@ -435,23 +469,23 @@
 		right: 0 !important;
 		background: #fff !important;
 		border-left: 1px solid #e5e7eb !important;
-		border-radius: 0 !important;
-		box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1) !important;
+		border-radius: 16px 0 0 16px !important;
+		box-shadow: -12px 0 30px rgba(15, 23, 42, 0.18) !important;
 		width: 400px !important;
 		height: 100vh !important;
 		opacity: 0 !important;
-		visibility: hidden !important;
 		transform: translateX(100%) !important;
 		transition:
 			transform 0.3s ease,
-			visibility 0.3s ease !important;
+			opacity 0.3s ease !important;
 		z-index: 1001 !important;
+		pointer-events: none !important;
 	}
 
 	.cart-dropdown.active {
 		opacity: 1 !important;
-		visibility: visible !important;
 		transform: translateX(0) !important;
+		pointer-events: auto !important;
 	}
 
 	.cart-dropdown-header {
@@ -551,6 +585,7 @@
 		gap: 16px;
 		padding: 16px 20px;
 		border-bottom: 1px solid #f0f0f0;
+		border-radius: 12px;
 	}
 
 	.dropdown-item:last-of-type {
@@ -562,7 +597,7 @@
 		width: 80px;
 		height: 80px;
 		object-fit: cover;
-		border-radius: 4px;
+		border-radius: 10px;
 		overflow: hidden;
 	}
 
@@ -606,8 +641,6 @@
 		opacity: 1 !important;
 	}
 </style>
-
-<h1>Condition B (in-use)</h1>
 <div class="page-header">
 	<a href="#" class="logo">OfficeOnline</a>
 	<button
@@ -616,6 +649,9 @@
 		id="cart-icon-btn"
 		aria-label="Open cart"
 	>
+	   <p class="cart-label">
+	       Cart
+	   </p>
 		<svg
 			viewBox="0 0 24 24"
 			fill="none"
@@ -633,15 +669,11 @@
 </div>
 
 <div class="page-main">
-	<h1>Checkout</h1>
-
 	<!-- Product Section -->
 	<div class="product-container">
 		<div class="product-image">
-			<img src="images/ergonomique-31.png" alt="Ergonomique Office Chair" />
-			<button type="button" class="zoom-indicator" aria-label="Zoom in">
-				+
-			</button>
+			<img src="https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true" alt="Ergonomique Office Chair" />
+			<button type="button" class="zoom-indicator" aria-label="Zoom image">+</button>
 		</div>
 
 		<div class="product-info">
@@ -661,6 +693,7 @@
 				<label>Colour</label>
 				<div class="color-options">
 					<button
+					    type="button"
 						class="color-btn active"
 						data-color="black"
 						style="background-color: #000"
@@ -749,6 +782,10 @@
 	<div id="dropdown-items"></div>
 	<div class="cart-dropdown-footer">
 		<div class="dropdown-subtotal">
+			<span>Subtotal:</span>
+			<span id="dropdown-subtotal">$0.00</span>
+		</div>
+		<div class="dropdown-subtotal">
 			<span>Total:</span>
 			<span id="dropdown-total">$0.00</span>
 		</div>
@@ -764,15 +801,12 @@
 		// SoSci-compatible checkout
 		let cart = [];
 		let selectedColor = "black";
-		let isZoomed = false;
-		let currentPanX = 0;
-		let currentPanY = 0;
 
 		const productData = {
 			id: "ergonomique-chair",
 			name: "Ergonomique Office Chair",
 			price: 199.99,
-			image: "images/ergonomique-31.png",
+			image: "https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true",
 		};
 
 		const addToCartBtn = document.querySelector(".add-to-cart-btn");
@@ -782,57 +816,72 @@
 		const productImage = document.querySelector(".product-image img");
 		const zoomBtn = document.querySelector(".zoom-indicator");
 
-		// Zoom and pan functionality
-		zoomBtn.addEventListener("click", toggleZoom);
-		productImageContainer.addEventListener("mousedown", startPan);
-		productImageContainer.addEventListener("mousemove", pan);
-		productImageContainer.addEventListener("mouseup", endPan);
-		productImageContainer.addEventListener("mouseleave", endPan);
+		let isZoomed = false;
+		let currentPanX = 0;
+		let currentPanY = 0;
+		const ZOOM_SCALE = 4;
 
-		function toggleZoom() {
-			isZoomed = !isZoomed;
-			if (isZoomed) {
-				productImage.classList.add("zoomed-in");
-				productImageContainer.classList.add("zoomed");
-				currentPanX = 0;
-				currentPanY = 0;
-				zoomBtn.innerHTML = "-"; // no SVG
-			} else {
-				productImage.classList.remove("zoomed-in");
-				productImageContainer.classList.remove("zoomed");
-				currentPanX = 0;
-				currentPanY = 0;
-				productImage.style.transform = "translate(0, 0)";
-				zoomBtn.innerHTML = "+"; // no SVG
+		// Custom zoom + drag/hover-to-pan (pointer-based, works on mouse + touch)
+		if (productImageContainer && productImage && zoomBtn) {
+			zoomBtn.addEventListener("click", function () {
+				isZoomed = !isZoomed;
+
+				if (isZoomed) {
+					productImageContainer.classList.add("zoomed");
+					currentPanX = 0;
+					currentPanY = 0;
+					zoomBtn.textContent = "−";
+					applyTransform();
+				} else {
+					productImageContainer.classList.remove("zoomed");
+					currentPanX = 0;
+					currentPanY = 0;
+					productImage.style.transform = "";
+					zoomBtn.textContent = "+";
+				}
+			});
+
+			function applyTransform() {
+				productImage.style.transform =
+					"scale(" +
+					ZOOM_SCALE +
+					") translate(" +
+					currentPanX +
+					"px, " +
+					currentPanY +
+					"px)";
 			}
-		}
 
-		function startPan(e) {
-			if (!isZoomed) return;
-			productImageContainer.classList.add("zoomed");
-		}
+			function updatePanFromEvent(e) {
+				const rect = productImageContainer.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
 
-		function pan(e) {
-			if (!isZoomed) return;
+				// Normalized offsets from center (-1 to 1)
+				const offsetX = ((x / rect.width) - 0.5) * 2;
+				const offsetY = ((y / rect.height) - 0.5) * 2;
 
-			const rect = productImageContainer.getBoundingClientRect();
-			const x = e.clientX - rect.left;
-			const y = e.clientY - rect.top;
+				// Max translation so image stays within container bounds
+				const maxOffsetX = (rect.width * (ZOOM_SCALE - 1)) / (2 * ZOOM_SCALE);
+				const maxOffsetY = (rect.height * (ZOOM_SCALE - 1)) / (2 * ZOOM_SCALE);
 
-			const percentX = (x / rect.width) * 100;
-			const percentY = (y / rect.height) * 100;
-
-			const panX = (percentX - 50) * (rect.width * 0.06);
-			const panY = (percentY - 50) * (rect.height * 0.06);
-
-			productImage.style.transform =
-				"translate(" + -panX + "px, " + -panY + "px)";
-		}
-
-		function endPan() {
-			if (!isZoomed) {
-				productImageContainer.classList.remove("zoomed");
+				currentPanX = -offsetX * maxOffsetX;
+				currentPanY = -offsetY * maxOffsetY;
+				applyTransform();
 			}
+
+			productImageContainer.addEventListener("pointerdown", function (e) {
+				if (!isZoomed) return;
+				// Prevent page scrolling while panning on touch
+				if (e.pointerType === "touch") {
+					e.preventDefault();
+				}
+			});
+
+			productImageContainer.addEventListener("pointermove", function (e) {
+				if (!isZoomed) return;
+				updatePanFromEvent(e);
+			});
 		}
 
 		// Color selection
@@ -891,6 +940,7 @@
 
 		function updateCart() {
 			const dropdownItemsEl = document.getElementById("dropdown-items");
+			const dropdownSubtotalEl = document.getElementById("dropdown-subtotal");
 			const dropdownTotalEl = document.getElementById("dropdown-total");
 
 			if (!dropdownItemsEl || !dropdownTotalEl) return;
@@ -898,6 +948,7 @@
 			if (cart.length === 0) {
 				dropdownItemsEl.innerHTML =
 					'<div class="dropdown-empty">Your cart is empty</div>';
+				if (dropdownSubtotalEl) dropdownSubtotalEl.textContent = "$0.00";
 				dropdownTotalEl.textContent = "$0.00";
 				checkoutBtn.disabled = true;
 				return;
@@ -935,6 +986,8 @@
 					"</div>";
 			});
 
+			if (dropdownSubtotalEl)
+				dropdownSubtotalEl.textContent = "$" + subtotal.toFixed(2);
 			dropdownTotalEl.textContent = "$" + subtotal.toFixed(2);
 			checkoutBtn.disabled = false;
 		}
@@ -951,6 +1004,14 @@
 				// Move to next SoSci question
 				if (typeof SoSci !== "undefined" && SoSci.nextPage) {
 					SoSci.nextPage();
+				} else {
+					// Fallback: submit the questionnaire form
+					var form =
+						document.getElementById("questionnaireForm") ||
+						document.forms[0];
+					if (form && typeof form.submit === "function") {
+						form.submit();
+					}
 				}
 			}
 		});
