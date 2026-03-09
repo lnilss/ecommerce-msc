@@ -25,11 +25,11 @@
 		top: 0 !important;
 		z-index: 10 !important;
 	}
-	
+
 	.cart-label {
-	    font-size: 12px;
-	    font-weight: 200 !important;
-	    padding-right: 0.5em;
+		font-size: 12px;
+		font-weight: 200 !important;
+		padding-right: 0.5em;
 	}
 
 	.cart-icon-btn {
@@ -124,6 +124,27 @@
 		margin-bottom: 32px;
 	}
 
+	.breadcrumb {
+		font-size: 0.8rem;
+		color: #6b7280;
+		margin-bottom: 12px;
+	}
+	.breadcrumb a {
+		color: #6b7280;
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+	.breadcrumb-separator {
+		margin: 0 4px;
+	}
+	.breadcrumb-current {
+		text-decoration: underline;
+		font-weight: 500;
+		color: #111827;
+	}
+
 	.product-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -150,8 +171,8 @@
 		box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18);
 	}
 	.product-image.zoomed {
-	cursor: zoom-in;
-	touch-action: none;
+		cursor: zoom-in;
+		touch-action: none;
 	}
 	.product-image img {
 		width: 100%;
@@ -296,24 +317,23 @@
 		gap: 8px !important;
 		transition: opacity 0.2s !important;
 	}
-	
 
 	.add-to-cart-btn:hover {
 		opacity: 0.9 !important;
 	}
 
 	.add-to-cart-btn:active {
-	animation: buttonPress 0.3s ease !important;
-    }
-    
-    .add-to-cart-btn:disabled,
-    .add-to-cart-btn[disabled] {
-	background: #d1d5db !important;
-	color: #9ca3af !important;
-	cursor: not-allowed !important;
-	opacity: 1 !important;
-	box-shadow: none !important;
-    }
+		animation: buttonPress 0.3s ease !important;
+	}
+
+	.add-to-cart-btn:disabled,
+	.add-to-cart-btn[disabled] {
+		background: #d1d5db !important;
+		color: #9ca3af !important;
+		cursor: not-allowed !important;
+		opacity: 1 !important;
+		box-shadow: none !important;
+	}
 
 	@keyframes buttonPress {
 		0% {
@@ -649,9 +669,7 @@
 		id="cart-icon-btn"
 		aria-label="Open cart"
 	>
-	   <p class="cart-label">
-	       Cart
-	   </p>
+		<p class="cart-label">Cart</p>
 		<svg
 			viewBox="0 0 24 24"
 			fill="none"
@@ -669,11 +687,25 @@
 </div>
 
 <div class="page-main">
+	<div class="breadcrumb">
+		<span>Home</span>
+		<span class="breadcrumb-separator">&gt;</span>
+		<span>Products</span>
+		<span class="breadcrumb-separator">&gt;</span>
+		<span>Office Chairs</span>
+		<span class="breadcrumb-separator">&gt;</span>
+		<span class="breadcrumb-current">Ergonomique Office Chair</span>
+	</div>
 	<!-- Product Section -->
 	<div class="product-container">
 		<div class="product-image">
-			<img src="https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true" alt="Ergonomique Office Chair" />
-			<button type="button" class="zoom-indicator" aria-label="Zoom image">+</button>
+			<img
+				src="https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true"
+				alt="Ergonomique Office Chair"
+			/>
+			<button type="button" class="zoom-indicator" aria-label="Zoom image">
+				+
+			</button>
 		</div>
 
 		<div class="product-info">
@@ -693,7 +725,7 @@
 				<label>Colour</label>
 				<div class="color-options">
 					<button
-					    type="button"
+						type="button"
 						class="color-btn active"
 						data-color="black"
 						style="background-color: #000"
@@ -806,7 +838,8 @@
 			id: "ergonomique-chair",
 			name: "Ergonomique Office Chair",
 			price: 199.99,
-			image: "https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true",
+			image:
+				"https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true",
 		};
 
 		const addToCartBtn = document.querySelector(".add-to-cart-btn");
@@ -821,9 +854,28 @@
 		let currentPanY = 0;
 		const ZOOM_SCALE = 4;
 
-		// Custom zoom + drag/hover-to-pan (pointer-based, works on mouse + touch)
+		// Start time for the page
+		const pageStartTime = performance.now();
+
+		function setInternalVar(id, value) {
+			var el = document.getElementById(id);
+			if (el) el.value = String(value);
+		}
+		function appendInternalLog(id, entry) {
+			var el = document.getElementById(id);
+			if (!el) return;
+			el.value = el.value ? el.value + ";" + entry : entry;
+		}
+
+		// Custom zoom + drag/hover-to-pan
 		if (productImageContainer && productImage && zoomBtn) {
 			zoomBtn.addEventListener("click", function () {
+				// Time since page load in milliseconds
+				const t = performance.now() - pageStartTime;
+				// Store first zoom click time in IV01_01 (configure in SoSci)
+				const entry = "zoom@" + Math.round(t);
+				appendInternalLog("IC05_01", entry);
+
 				isZoomed = !isZoomed;
 
 				if (isZoomed) {
@@ -858,8 +910,8 @@
 				const y = e.clientY - rect.top;
 
 				// Normalized offsets from center (-1 to 1)
-				const offsetX = ((x / rect.width) - 0.5) * 2;
-				const offsetY = ((y / rect.height) - 0.5) * 2;
+				const offsetX = (x / rect.width - 0.5) * 2;
+				const offsetY = (y / rect.height - 0.5) * 2;
 
 				// Max translation so image stays within container bounds
 				const maxOffsetX = (rect.width * (ZOOM_SCALE - 1)) / (2 * ZOOM_SCALE);
@@ -892,6 +944,11 @@
 				});
 				e.target.classList.add("active");
 				selectedColor = e.target.dataset.color;
+
+				// Log click on colour button: "clicked@<time_ms>" into IV01_03
+				const t = performance.now() - pageStartTime;
+				const entry = "clicked@" + Math.round(t);
+				appendInternalLog("IC05_03", entry); //colour
 			});
 		});
 
@@ -923,6 +980,10 @@
 		// Add to cart
 		addToCartBtn.addEventListener("click", function () {
 			if (cart.length === 0) {
+				// Record time of add-to-cart click in IV01_02
+				const t = performance.now() - pageStartTime;
+				setInternalVar("IC05_02", Math.round(t)); //add to cart
+
 				cart.push({
 					id: productData.id,
 					name: productData.name,
@@ -1007,8 +1068,7 @@
 				} else {
 					// Fallback: submit the questionnaire form
 					var form =
-						document.getElementById("questionnaireForm") ||
-						document.forms[0];
+						document.getElementById("questionnaireForm") || document.forms[0];
 					if (form && typeof form.submit === "function") {
 						form.submit();
 					}
