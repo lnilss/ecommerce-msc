@@ -46,6 +46,28 @@
 		-webkit-appearance: none !important;
 		-moz-appearance: none !important;
 		appearance: none !important;
+		position: relative !important;
+	}
+
+	.cart-badge {
+		position: absolute;
+		top: 4px;
+		right: 2px;
+		min-width: 18px;
+		height: 18px;
+		padding: 0 4px;
+		border-radius: 999px;
+		background: #ef4444;
+		color: #fff;
+		font-size: 11px;
+		font-weight: 600;
+		display: none;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.cart-badge.visible {
+		display: flex;
 	}
 
 	.cart-icon-btn:hover {
@@ -670,6 +692,7 @@
 		aria-label="Open cart"
 	>
 		<p class="cart-label">Cart</p>
+		<span class="cart-badge" id="cart-badge" aria-hidden="true">1</span>
 		<svg
 			viewBox="0 0 24 24"
 			fill="none"
@@ -700,7 +723,7 @@
 	<div class="product-container">
 		<div class="product-image">
 			<img
-				src="https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true"
+				src="https://github.com/Naiadis/Image-tech-conditions/blob/095aff0e45d04477115afda9d18edc8a48c808d8/data/adjusted_images/AdobeStock_237775982.jpeg?raw=true"
 				alt="Ergonomique Office Chair"
 			/>
 			<button type="button" class="zoom-indicator" aria-label="Zoom image">
@@ -839,7 +862,7 @@
 			name: "Ergonomique Office Chair",
 			price: 199.99,
 			image:
-				"https://github.com/lnilss/ecommerce-msc/blob/ae6a47930c64a408eb598cb11bb0d69580af9342/images/ergonomique-31.png?raw=true",
+				"https://github.com/Naiadis/Image-tech-conditions/blob/095aff0e45d04477115afda9d18edc8a48c808d8/data/adjusted_images/AdobeStock_237775982.jpeg?raw=true",
 		};
 
 		const addToCartBtn = document.querySelector(".add-to-cart-btn");
@@ -999,6 +1022,19 @@
 			}
 		});
 
+		const cartBadge = document.getElementById("cart-badge");
+
+		function updateCartBadge() {
+			if (!cartBadge) return;
+			const count = cart.length;
+			if (count > 0) {
+				cartBadge.textContent = count;
+				cartBadge.classList.add("visible");
+			} else {
+				cartBadge.classList.remove("visible");
+			}
+		}
+
 		function updateCart() {
 			const dropdownItemsEl = document.getElementById("dropdown-items");
 			const dropdownSubtotalEl = document.getElementById("dropdown-subtotal");
@@ -1051,6 +1087,8 @@
 				dropdownSubtotalEl.textContent = "$" + subtotal.toFixed(2);
 			dropdownTotalEl.textContent = "$" + subtotal.toFixed(2);
 			checkoutBtn.disabled = false;
+
+			updateCartBadge();
 		}
 
 		checkoutBtn.addEventListener("click", function () {
@@ -1078,6 +1116,7 @@
 
 		// Initialize cart
 		updateCart();
+		updateCartBadge();
 	});
 	// -->
 </script>
